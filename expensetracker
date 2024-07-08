@@ -1,0 +1,48 @@
+def display_menu():
+    print("\nExpense Tracker Menu")
+    print("1. Add an Expense")
+    print("2. View Expense Summary")
+    print("3. Exit")
+def add_expense(expenses):
+    try:
+        category = input("Enter the expense category (e.g., Food, Transport, Entertainment): ").strip().capitalize()
+        amount = float(input("Enter the expense amount: "))
+        
+        if category in expenses:
+            expenses[category].append(amount)
+        else:
+            expenses[category] = [amount]
+        
+        print(f"Added expense of {amount} to {category} category.")
+    except ValueError:
+        print("Invalid input. Please enter a numerical value for the amount.")
+def view_summary(expenses):
+    if not expenses:
+        print("No expenses recorded yet.")
+        return
+    
+    total_expenses = 0
+    print("\nExpense Summary by Category:")
+    for category, amounts in expenses.items():
+        total = sum(amounts)
+        total_expenses += total
+        print(f"{category}: ${total:.2f}")
+    
+    print(f"\nTotal Expenses: ${total_expenses:.2f}")
+def main():
+    expenses = {}
+    while True:
+        display_menu()
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            add_expense(expenses)
+        elif choice == '2':
+            view_summary(expenses)
+        elif choice == '3':
+            print("Exiting the expense tracker. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+if __name__ == "__main__":
+    main()
